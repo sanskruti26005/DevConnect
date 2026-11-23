@@ -3,7 +3,8 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-
+import profileRoutes from './routes/profile.routes.js';
+import projectRoutes from './routes/project.routes.js';
 dotenv.config();
 
 const app = express();
@@ -18,6 +19,8 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 app.use('/api/auth', authRoutes);
+app.use('/api/profile', profileRoutes);
+app.use('/api/projects', projectRoutes);
 
 app.get('/api/health', (_req, res) => {
   res.status(200).json({

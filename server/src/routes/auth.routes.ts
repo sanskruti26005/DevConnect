@@ -153,6 +153,7 @@ router.post('/login', async (req, res) => {
 
   } catch (error) {
     console.error('Login error:', error);
+    console.dir(error, { depth: 5 });
 
     return res.status(500).json({
       success: false,
