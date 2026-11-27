@@ -33,7 +33,22 @@ export type Project = Prisma.ProjectModel
  */
 export type BlogPost = Prisma.BlogPostModel
 /**
+ * Model FeedPost
+ * 
+ */
+export type FeedPost = Prisma.FeedPostModel
+/**
  * Model Connection
  * 
  */
 export type Connection = Prisma.ConnectionModel
+/**
+ * Model Endorsement
+ * 
+ */
+export type Endorsement = Prisma.EndorsementModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel

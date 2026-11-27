@@ -54,7 +54,10 @@ export const ModelName = {
   User: 'User',
   Project: 'Project',
   BlogPost: 'BlogPost',
-  Connection: 'Connection'
+  FeedPost: 'FeedPost',
+  Connection: 'Connection',
+  Endorsement: 'Endorsement',
+  Notification: 'Notification'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -116,6 +119,17 @@ export const BlogPostScalarFieldEnum = {
 export type BlogPostScalarFieldEnum = (typeof BlogPostScalarFieldEnum)[keyof typeof BlogPostScalarFieldEnum]
 
 
+export const FeedPostScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  authorId: 'authorId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FeedPostScalarFieldEnum = (typeof FeedPostScalarFieldEnum)[keyof typeof FeedPostScalarFieldEnum]
+
+
 export const ConnectionScalarFieldEnum = {
   id: 'id',
   senderId: 'senderId',
@@ -125,6 +139,29 @@ export const ConnectionScalarFieldEnum = {
 } as const
 
 export type ConnectionScalarFieldEnum = (typeof ConnectionScalarFieldEnum)[keyof typeof ConnectionScalarFieldEnum]
+
+
+export const EndorsementScalarFieldEnum = {
+  id: 'id',
+  fromUserId: 'fromUserId',
+  toUserId: 'toUserId',
+  skill: 'skill',
+  createdAt: 'createdAt'
+} as const
+
+export type EndorsementScalarFieldEnum = (typeof EndorsementScalarFieldEnum)[keyof typeof EndorsementScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  message: 'message',
+  isRead: 'isRead',
+  createdAt: 'createdAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
 
 
 export const SortOrder = {

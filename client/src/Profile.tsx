@@ -1,8 +1,11 @@
 
 import { useEffect, useState } from 'react';
+import type { FormEvent } from 'react';
 import Projects from './Projects';
+import Community from './Community';
+import Feed from './Feed';
 
-const API_URL = 'http://localhost:5000/api/profile';
+const API = 'http://localhost:5000/api/profile';
 
 interface UserProfile {
   id: string;
@@ -14,18 +17,24 @@ interface UserProfile {
   skills: string[];
 }
 
-interface ApiResponse<T> {
-  success: boolean;
-  data?: T;
-  message: string;
-}
-
 interface ProfileProps {
   onLogout: () => void;
 }
 
+const navigation = [
+  { id: 'home', label: 'Overview', icon: '⌂' },
+  { id: 'find-developers', label: 'Discover Developers', icon: '◎' },
+  { id: 'community-blogs', label: 'Developer Blogs', icon: '▤' },
+  { id: 'my-projects', label: 'My Projects', icon: '▦' },
+  { id: 'community-connections', label: 'My Connections', icon: '♧' },
+  { id: 'community-notifications', label: 'Notifications', icon: '♢' },
+  { id: 'profile', label: 'My Profile', icon: '◉' }
+];
+
 function Profile({ onLogout }: ProfileProps) {
   const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [activeSection, setActiveSection] = useState<string | null>('home');
+  const [editing, setEditing] = useState(false);
 
   const [name, setName] = useState('');
   const [bio, setBio] = useState('');
@@ -36,57 +45,52 @@ function Profile({ onLogout }: ProfileProps) {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
-  const [isEditing, setIsEditing] = useState(false);
 
-  // Controls which dashboard section is open
-  const [activeSection, setActiveSection] = useState<string | null>('profile');
-
-  // Fetch profile
   useEffect(() => {
-    const fetchProfile = async () => {
+    const loadProfile = async () => {
       try {
-        const response = await fetch(API_URL, {
+        const response = await fetch(API, {
           credentials: 'include'
         });
 
-        const result: ApiResponse<UserProfile> = await response.json();
+        const result = await response.json();
 
-        if (!response.ok || !result.success || !result.data) {
-          throw new Error(result.message || 'Unable to fetch profile');
+        if (!response.ok || !result.success) {
+          throw new Error(result.message || 'Unable to load profile');
         }
 
-        setProfile(result.data);
-        setName(result.data.name);
-        setBio(result.data.bio || '');
-        setLocation(result.data.location || '');
-        setSkills(result.data.skills.join(', '));
+        const user = result.data as UserProfile;
+
+        setProfile(user);
+        setName(user.name);
+        setBio(user.bio ?? '');
+        setLocation(user.location ?? '');
+        setSkills(user.skills.join(', '));
       } catch (err) {
         setError(
-          err instanceof Error ? err.message : 'Unable to fetch profile'
+          err instanceof Error ? err.message : 'Unable to load profile'
         );
       } finally {
         setLoading(false);
       }
     };
 
-    fetchProfile();
+    void loadProfile();
   }, []);
 
-  // Save updated profile
-  const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
+  const saveProfile = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
+    setSaving(true);
     setError('');
     setMessage('');
-    setSaving(true);
 
     try {
-      const response = await fetch(API_URL, {
+      const response = await fetch(API, {
         method: 'PUT',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         },
-        credentials: 'include',
         body: JSON.stringify({
           name,
           bio,
@@ -98,19 +102,21 @@ function Profile({ onLogout }: ProfileProps) {
         })
       });
 
-      const result: ApiResponse<UserProfile> = await response.json();
+      const result = await response.json();
 
-      if (!response.ok || !result.success || !result.data) {
+      if (!response.ok || !result.success) {
         throw new Error(result.message || 'Unable to update profile');
       }
 
-      setProfile(result.data);
-      setName(result.data.name);
-      setBio(result.data.bio || '');
-      setLocation(result.data.location || '');
-      setSkills(result.data.skills.join(', '));
-      setIsEditing(false);
-      setMessage('Profile updated successfully!');
+      const updatedProfile = result.data as UserProfile;
+
+      setProfile(updatedProfile);
+      setName(updatedProfile.name);
+      setBio(updatedProfile.bio ?? '');
+      setLocation(updatedProfile.location ?? '');
+      setSkills(updatedProfile.skills.join(', '));
+      setEditing(false);
+      setMessage('Your profile has been updated successfully.');
     } catch (err) {
       setError(
         err instanceof Error ? err.message : 'Unable to update profile'
@@ -120,167 +126,503 @@ function Profile({ onLogout }: ProfileProps) {
     }
   };
 
-  // Toggle dashboard sections
-  const toggleSection = (section: string) => {
-    setActiveSection((current) =>
-      current === section ? null : section
-    );
+  const cancelEditing = () => {
+    if (!profile) return;
+
+    setName(profile.name);
+    setBio(profile.bio ?? '');
+    setLocation(profile.location ?? '');
+    setSkills(profile.skills.join(', '));
+    setEditing(false);
+    setError('');
   };
 
-  if (loading) {
-    return <div className="dashboard-card">Loading profile...</div>;
-  }
+  const selectSection = (section: string) => {
+    setActiveSection(section);
+    setEditing(false);
+    setError('');
+    setMessage('');
+  };
 
-  if (!profile) {
+  const firstName = profile?.name?.trim().split(/\s+/)[0] || 'Developer';
+  const initials = profile?.name?.trim().charAt(0).toUpperCase() || 'D';
+
+  if (loading) {
     return (
-      <div className="dashboard-card">
-        <p className="error-message">{error || 'Profile not found'}</p>
-        <button className="primary-button" onClick={onLogout}>
-          Logout
-        </button>
+      <div className="dashboard-loading">
+        <div className="loading-spinner" />
+        <p>Preparing your DevConnect workspace...</p>
       </div>
     );
   }
 
   return (
-    <div className="dashboard-card profile-card">
-
-      <h1>DevConnect</h1>
-      <p className="tagline">Your Developer Dashboard</p>
-
-      {message && <p className="success-message">{message}</p>}
-      {error && <p className="error-message">{error}</p>}
-
-      {/* My Profile Section */}
-      <div className="accordion-section">
-
+    <div className="dashboard-shell">
+      <header className="dashboard-topbar">
         <button
+          className="dashboard-brand"
           type="button"
-          className="accordion-trigger"
-          onClick={() => toggleSection('profile')}
-          aria-expanded={activeSection === 'profile'}
+          onClick={() => selectSection('home')}
         >
-          <span>My Profile</span>
-          <span className="accordion-icon">
-            {activeSection === 'profile' ? '−' : '+'}
+          <span className="brand-mark">D</span>
+          <span>
+            DevConnect<span className="brand-period">.</span>
           </span>
         </button>
 
-        {activeSection === 'profile' && (
-          <div className="accordion-content">
+        <div className="topbar-right">
+          <span className="topbar-greeting">
+            Welcome, {firstName}
+          </span>
 
-            {!isEditing ? (
-              <div className="profile-details">
-                <h2>{profile.name}</h2>
+          <button
+            type="button"
+            className="topbar-avatar"
+            onClick={() => selectSection('profile')}
+            aria-label="Open profile"
+          >
+            {initials}
+          </button>
 
-                <p>
-                  <strong>Email:</strong> {profile.email}
-                </p>
+          <button
+            type="button"
+            className="topbar-logout"
+            onClick={onLogout}
+          >
+            Sign out
+          </button>
+        </div>
+      </header>
 
-                <p>
-                  <strong>Bio:</strong>{' '}
-                  {profile.bio || 'No bio added yet'}
-                </p>
+      <div className="dashboard-body">
+        <aside className="dashboard-sidebar">
+          <div className="sidebar-profile">
+            <div className="sidebar-avatar">{initials}</div>
+            <div className="sidebar-profile-info">
+              <strong>{profile?.name || 'Developer'}</strong>
+              <span>{profile?.location || 'Add your location'}</span>
+            </div>
+          </div>
 
-                <p>
-                  <strong>Location:</strong>{' '}
-                  {profile.location || 'Not specified'}
-                </p>
+          <p className="sidebar-label">WORKSPACE</p>
 
-                <p>
-                  <strong>Skills:</strong>{' '}
-                  {profile.skills.length > 0
-                    ? profile.skills.join(', ')
-                    : 'No skills added yet'}
-                </p>
+          <nav className="sidebar-navigation" aria-label="Main navigation">
+            {navigation.map((item) => (
+              <button
+                type="button"
+                key={item.id}
+                className={`sidebar-nav-item ${
+                  activeSection === item.id ? 'active' : ''
+                }`}
+                onClick={() => selectSection(item.id)}
+              >
+                <span className="sidebar-nav-icon">{item.icon}</span>
+                <span>{item.label}</span>
+                {activeSection === item.id && (
+                  <span className="nav-active-indicator" />
+                )}
+              </button>
+            ))}
+          </nav>
 
-                <button
-                  className="primary-button"
-                  onClick={() => {
-                    setMessage('');
-                    setError('');
-                    setIsEditing(true);
-                  }}
-                >
-                  Edit Profile
-                </button>
+          <div className="sidebar-bottom">
+            <div className="sidebar-tip">
+              <span className="tip-icon">✦</span>
+              <strong>Keep growing</strong>
+              <p>
+                Share your work and connect with other developers.
+              </p>
+              <button
+                type="button"
+                onClick={() => selectSection('community-blogs')}
+              >
+                Write an article →
+              </button>
+            </div>
+
+            <button
+              type="button"
+              className="sidebar-signout"
+              onClick={onLogout}
+            >
+              <span>↪</span> Sign out
+            </button>
+          </div>
+        </aside>
+
+        <main className="dashboard-main">
+          <div className="dashboard-content">
+            {error && (
+              <div className="dashboard-alert error-message">
+                {error}
               </div>
-            ) : (
-              <form onSubmit={handleSave}>
-                <h2>Edit Your Profile</h2>
-
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  value={name}
-                  onChange={(event) => setName(event.target.value)}
-                  required
-                />
-
-                <textarea
-                  placeholder="Write something about yourself"
-                  value={bio}
-                  onChange={(event) => setBio(event.target.value)}
-                  rows={4}
-                />
-
-                <input
-                  type="text"
-                  placeholder="Location"
-                  value={location}
-                  onChange={(event) => setLocation(event.target.value)}
-                />
-
-                <input
-                  type="text"
-                  placeholder="Skills separated by commas"
-                  value={skills}
-                  onChange={(event) => setSkills(event.target.value)}
-                />
-
-                <button
-                  type="submit"
-                  className="primary-button"
-                  disabled={saving}
-                >
-                  {saving ? 'Saving...' : 'Save Changes'}
-                </button>
-
-                <button
-                  type="button"
-                  className="secondary-button"
-                  onClick={() => {
-                    setName(profile.name);
-                    setBio(profile.bio || '');
-                    setLocation(profile.location || '');
-                    setSkills(profile.skills.join(', '));
-                    setIsEditing(false);
-                    setError('');
-                  }}
-                >
-                  Cancel
-                </button>
-              </form>
             )}
 
+            {message && (
+              <div className="dashboard-alert success-message">
+                {message}
+              </div>
+            )}
+
+            {activeSection === 'home' && (
+              <section className="overview-page">
+                <div className="page-heading">
+                  <div>
+                    <p className="eyebrow">YOUR WORKSPACE</p>
+                    <h1>Good to see you, {firstName}.</h1>
+                    <p className="page-subtitle">
+                      Your developer journey continues here. Explore,
+                      build and connect with the community.
+                    </p>
+                  </div>
+
+                  <div className="heading-avatar">{initials}</div>
+                </div>
+
+                <div className="welcome-banner">
+                  <div className="welcome-banner-content">
+                    <span className="banner-label">
+                      WELCOME TO DEVCONNECT
+                    </span>
+                    <h2>Build your network. Share your journey.</h2>
+                    <p>
+                      Showcase your projects, discover developers and
+                      learn from the community.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => selectSection('find-developers')}
+                    >
+                      Explore developers <span>→</span>
+                    </button>
+                  </div>
+
+                  <div className="welcome-decoration" aria-hidden="true">
+                    <span>{'{ }'}</span>
+                    <span>&lt;/&gt;</span>
+                    <span>✦</span>
+                  </div>
+                </div>
+
+                <div className="section-heading">
+                  <div>
+                    <h2>Quick access</h2>
+                    <p>Pick up where you want to continue.</p>
+                  </div>
+                </div>
+
+                <div className="quick-access-grid">
+                  <button
+                    type="button"
+                    className="quick-access-card"
+                    onClick={() => selectSection('my-projects')}
+                  >
+                    <span className="quick-card-icon purple">▦</span>
+                    <strong>My Projects</strong>
+                    <span>Showcase what you've built</span>
+                    <span className="quick-card-arrow">→</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    className="quick-access-card"
+                    onClick={() => selectSection('find-developers')}
+                  >
+                    <span className="quick-card-icon blue">◎</span>
+                    <strong>Discover Developers</strong>
+                    <span>Find people with shared interests</span>
+                    <span className="quick-card-arrow">→</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    className="quick-access-card"
+                    onClick={() => selectSection('community-blogs')}
+                  >
+                    <span className="quick-card-icon orange">▤</span>
+                    <strong>Developer Blogs</strong>
+                    <span>Share ideas and experiences</span>
+                    <span className="quick-card-arrow">→</span>
+                  </button>
+                </div>
+
+                <div className="section-heading overview-profile-heading">
+                  <div>
+                    <h2>Your profile</h2>
+                    <p>Keep your developer information up to date.</p>
+                  </div>
+                  <button
+                    type="button"
+                    className="subtle-action"
+                    onClick={() => selectSection('profile')}
+                  >
+                    Edit profile →
+                  </button>
+                </div>
+
+                <div className="overview-profile-card">
+                  <div className="overview-profile-avatar">
+                    {initials}
+                  </div>
+
+                  <div className="overview-profile-details">
+                    <h3>{profile?.name}</h3>
+                    <p>
+                      {profile?.bio ||
+                        'Add a short bio to introduce yourself.'}
+                    </p>
+
+                    <div className="profile-meta">
+                      <span>✉ {profile?.email}</span>
+                      <span>
+                        ⌖ {profile?.location || 'Location not specified'}
+                      </span>
+                    </div>
+
+                    <div className="overview-skills">
+                      {profile?.skills?.length ? (
+                        profile.skills.map((skill) => (
+                          <span className="skill-chip" key={skill}>
+                            {skill}
+                          </span>
+                        ))
+                      ) : (
+                        <span className="muted-text">
+                          No skills added yet
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="section-heading feed-heading">
+                  <div>
+                    <h2>Community feed</h2>
+                    <p>
+                      Share your progress and connect with developers.
+                    </p>
+                  </div>
+                </div>
+
+                <Feed />
+              </section>
+            )}
+
+            {activeSection === 'profile' && (
+              <section className="profile-page">
+                <div className="page-heading">
+                  <div>
+                    <p className="eyebrow">ACCOUNT</p>
+                    <h1>My Profile</h1>
+                    <p className="page-subtitle">
+                      Manage your personal details and developer identity.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="profile-hero-card">
+                  <div className="profile-hero-avatar">{initials}</div>
+                  <div className="profile-hero-info">
+                    <h2>{profile?.name}</h2>
+                    <p>
+                      {profile?.location || 'Location not specified'}
+                    </p>
+                    <span className="profile-member-tag">
+                      DEVCONNECT MEMBER
+                    </span>
+                  </div>
+
+                  {!editing && (
+                    <button
+                      type="button"
+                      className="primary-action"
+                      onClick={() => setEditing(true)}
+                    >
+                      Edit profile
+                    </button>
+                  )}
+                </div>
+
+                <div className="profile-form-card">
+                  <div className="section-heading">
+                    <div>
+                      <h2>Personal information</h2>
+                      <p>
+                        Your information helps developers get to know you.
+                      </p>
+                    </div>
+                  </div>
+
+                  {editing ? (
+                    <form
+                      className="professional-form"
+                      onSubmit={saveProfile}
+                    >
+                      <label>
+                        Full name
+                        <input
+                          value={name}
+                          onChange={(event) => setName(event.target.value)}
+                          required
+                        />
+                      </label>
+
+                      <label>
+                        Email address
+                        <input value={profile?.email || ''} disabled />
+                      </label>
+
+                      <label>
+                        Location
+                        <input
+                          value={location}
+                          onChange={(event) =>
+                            setLocation(event.target.value)
+                          }
+                          placeholder="e.g. Chandrapur, Maharashtra"
+                        />
+                      </label>
+
+                      <label>
+                        About you
+                        <textarea
+                          value={bio}
+                          onChange={(event) => setBio(event.target.value)}
+                          placeholder="Tell the community a little about yourself..."
+                          rows={4}
+                        />
+                      </label>
+
+                      <label>
+                        Skills
+                        <input
+                          value={skills}
+                          onChange={(event) => setSkills(event.target.value)}
+                          placeholder="Python, Java, React, SQL"
+                        />
+                        <span className="field-hint">
+                          Separate each skill with a comma.
+                        </span>
+                      </label>
+
+                      <div className="form-actions">
+                        <button
+                          type="button"
+                          className="secondary-action"
+                          onClick={cancelEditing}
+                        >
+                          Cancel
+                        </button>
+
+                        <button
+                          type="submit"
+                          className="primary-action"
+                          disabled={saving}
+                        >
+                          {saving ? 'Saving...' : 'Save changes'}
+                        </button>
+                      </div>
+                    </form>
+                  ) : (
+                    <div className="profile-information">
+                      <div className="information-row">
+                        <span>Full name</span>
+                        <strong>{profile?.name || 'Not provided'}</strong>
+                      </div>
+
+                      <div className="information-row">
+                        <span>Email address</span>
+                        <strong>{profile?.email || 'Not provided'}</strong>
+                      </div>
+
+                      <div className="information-row">
+                        <span>Location</span>
+                        <strong>
+                          {profile?.location || 'Not provided'}
+                        </strong>
+                      </div>
+
+                      <div className="information-row">
+                        <span>About</span>
+                        <strong>{profile?.bio || 'No bio added yet'}</strong>
+                      </div>
+
+                      <div className="information-row">
+                        <span>Skills</span>
+                        <div className="overview-skills">
+                          {profile?.skills?.length ? (
+                            profile.skills.map((skill) => (
+                              <span className="skill-chip" key={skill}>
+                                {skill}
+                              </span>
+                            ))
+                          ) : (
+                            <span className="muted-text">
+                              No skills added yet
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </section>
+            )}
+
+            {(activeSection === 'my-projects' ||
+              activeSection === 'add-project') && (
+              <section className="module-page">
+                <div className="page-heading">
+                  <div>
+                    <p className="eyebrow">YOUR WORK</p>
+                    <h1>My Projects</h1>
+                    <p className="page-subtitle">
+                      Organize and showcase the things you're building.
+                    </p>
+                  </div>
+                </div>
+
+                <Projects
+                  activeSection={activeSection}
+                  setActiveSection={setActiveSection}
+                />
+              </section>
+            )}
+
+            {(activeSection === 'find-developers' ||
+              activeSection === 'community-blogs' ||
+              activeSection === 'community-connections' ||
+              activeSection === 'community-notifications') && (
+              <section className="module-page">
+                <div className="page-heading">
+                  <div>
+                    <p className="eyebrow">COMMUNITY</p>
+                    <h1>
+                      {activeSection === 'find-developers' &&
+                        'Discover Developers'}
+                      {activeSection === 'community-blogs' &&
+                        'Developer Blogs'}
+                      {activeSection === 'community-connections' &&
+                        'My Connections'}
+                      {activeSection === 'community-notifications' &&
+                        'Notifications'}
+                    </h1>
+                    <p className="page-subtitle">
+                      Connect, collaborate and share knowledge with developers.
+                    </p>
+                  </div>
+                </div>
+
+                <Community
+                  currentUserId={profile?.id || ''}
+                  activeSection={activeSection}
+                  setActiveSection={setActiveSection}
+                />
+              </section>
+            )}
           </div>
-        )}
+        </main>
       </div>
-
-      {/* Project Sections */}
-      <Projects
-        activeSection={activeSection}
-        setActiveSection={setActiveSection}
-      />
-
-      {/* Logout */}
-      <button
-        className="secondary-button logout-button"
-        onClick={onLogout}
-      >
-        Logout
-      </button>
-
     </div>
   );
 }

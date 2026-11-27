@@ -11,5 +11,8 @@
 export type * from './models/User.js'
 export type * from './models/Project.js'
 export type * from './models/BlogPost.js'
+export type * from './models/FeedPost.js'
 export type * from './models/Connection.js'
+export type * from './models/Endorsement.js'
+export type * from './models/Notification.js'
 export type * from './commonInputTypes.js'

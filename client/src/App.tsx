@@ -105,27 +105,28 @@ function App() {
   };
 
   // Handle logout
-  const handleLogout = async () => {
-    try {
-      const response = await fetch(`${API_URL}/logout`, {
-        method: 'POST',
-        credentials: 'include'
-      });
 
-      if (!response.ok) {
-        throw new Error('Logout failed');
-      }
+const handleLogout = async () => {
+  try {
+    const response = await fetch(`${API_URL}/logout`, {
+      method: 'POST',
+      credentials: 'include'
+    });
 
-      setUser(null);
-      setName('');
-      setEmail('');
-      setPassword('');
-      setError('');
-      setMessage('You have logged out successfully.');
-    } catch {
-      setError('Unable to log out. Please try again.');
+    if (!response.ok) {
+      throw new Error('Logout failed');
     }
-  };
+
+    setUser(null);
+    setMessage('');
+    setError('');
+
+    alert('You have logged out successfully!');
+  } catch {
+    alert('Unable to log out. Please try again.');
+  }
+};
+
 
   // Logged-in dashboard and profile
   if (user) {

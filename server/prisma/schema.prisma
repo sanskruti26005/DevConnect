@@ -28,8 +28,12 @@ model User {
 
   projects          Project[]
   posts             BlogPost[]
+  feedPosts         FeedPost[]
   sentConnections  Connection[] @relation("SentConnections")
   receivedConnections Connection[] @relation("ReceivedConnections")
+  endorsementsGiven    Endorsement[] @relation("EndorsementsGiven")
+  endorsementsReceived Endorsement[] @relation("EndorsementsReceived")
+  notifications        Notification[]
 }
 
 model Project {
@@ -55,6 +59,17 @@ model BlogPost {
   updatedAt DateTime @updatedAt
 }
 
+model FeedPost {
+  id        String   @id @default(cuid())
+  content   String
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([authorId, createdAt])
+}
+
 model Connection {
   id         String           @id @default(cuid())
   senderId   String
@@ -68,4 +83,31 @@ model Connection {
 
   @@unique([senderId, receiverId])
   @@index([receiverId, status])
+}
+
+model Endorsement {
+  id         String   @id @default(cuid())
+  fromUserId String
+  toUserId   String
+  skill      String
+  createdAt  DateTime @default(now())
+
+  fromUser User @relation("EndorsementsGiven", fields: [fromUserId], references: [id], onDelete: Cascade)
+  toUser   User @relation("EndorsementsReceived", fields: [toUserId], references: [id], onDelete: Cascade)
+
+  @@unique([fromUserId, toUserId, skill])
+  @@index([toUserId])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead, createdAt])
 }

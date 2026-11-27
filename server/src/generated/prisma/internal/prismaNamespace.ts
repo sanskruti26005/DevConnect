@@ -400,7 +400,10 @@ export const ModelName = {
   User: 'User',
   Project: 'Project',
   BlogPost: 'BlogPost',
-  Connection: 'Connection'
+  FeedPost: 'FeedPost',
+  Connection: 'Connection',
+  Endorsement: 'Endorsement',
+  Notification: 'Notification'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -416,7 +419,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "project" | "blogPost" | "connection"
+    modelProps: "user" | "project" | "blogPost" | "feedPost" | "connection" | "endorsement" | "notification"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -642,6 +645,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    FeedPost: {
+      payload: Prisma.$FeedPostPayload<ExtArgs>
+      fields: Prisma.FeedPostFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FeedPostFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedPostPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FeedPostFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedPostPayload>
+        }
+        findFirst: {
+          args: Prisma.FeedPostFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedPostPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FeedPostFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedPostPayload>
+        }
+        findMany: {
+          args: Prisma.FeedPostFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedPostPayload>[]
+        }
+        create: {
+          args: Prisma.FeedPostCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedPostPayload>
+        }
+        createMany: {
+          args: Prisma.FeedPostCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FeedPostCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedPostPayload>[]
+        }
+        delete: {
+          args: Prisma.FeedPostDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedPostPayload>
+        }
+        update: {
+          args: Prisma.FeedPostUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedPostPayload>
+        }
+        deleteMany: {
+          args: Prisma.FeedPostDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FeedPostUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FeedPostUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedPostPayload>[]
+        }
+        upsert: {
+          args: Prisma.FeedPostUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedPostPayload>
+        }
+        aggregate: {
+          args: Prisma.FeedPostAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFeedPost>
+        }
+        groupBy: {
+          args: Prisma.FeedPostGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FeedPostGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FeedPostCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FeedPostCountAggregateOutputType> | number
+        }
+      }
+    }
     Connection: {
       payload: Prisma.$ConnectionPayload<ExtArgs>
       fields: Prisma.ConnectionFieldRefs
@@ -713,6 +790,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ConnectionCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ConnectionCountAggregateOutputType> | number
+        }
+      }
+    }
+    Endorsement: {
+      payload: Prisma.$EndorsementPayload<ExtArgs>
+      fields: Prisma.EndorsementFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EndorsementFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndorsementPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EndorsementFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndorsementPayload>
+        }
+        findFirst: {
+          args: Prisma.EndorsementFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndorsementPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EndorsementFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndorsementPayload>
+        }
+        findMany: {
+          args: Prisma.EndorsementFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndorsementPayload>[]
+        }
+        create: {
+          args: Prisma.EndorsementCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndorsementPayload>
+        }
+        createMany: {
+          args: Prisma.EndorsementCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.EndorsementCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndorsementPayload>[]
+        }
+        delete: {
+          args: Prisma.EndorsementDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndorsementPayload>
+        }
+        update: {
+          args: Prisma.EndorsementUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndorsementPayload>
+        }
+        deleteMany: {
+          args: Prisma.EndorsementDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EndorsementUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.EndorsementUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndorsementPayload>[]
+        }
+        upsert: {
+          args: Prisma.EndorsementUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EndorsementPayload>
+        }
+        aggregate: {
+          args: Prisma.EndorsementAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEndorsement>
+        }
+        groupBy: {
+          args: Prisma.EndorsementGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EndorsementGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EndorsementCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EndorsementCountAggregateOutputType> | number
+        }
+      }
+    }
+    Notification: {
+      payload: Prisma.$NotificationPayload<ExtArgs>
+      fields: Prisma.NotificationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NotificationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NotificationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        findFirst: {
+          args: Prisma.NotificationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NotificationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        findMany: {
+          args: Prisma.NotificationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+        }
+        create: {
+          args: Prisma.NotificationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        createMany: {
+          args: Prisma.NotificationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.NotificationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+        }
+        delete: {
+          args: Prisma.NotificationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        update: {
+          args: Prisma.NotificationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        deleteMany: {
+          args: Prisma.NotificationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NotificationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.NotificationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+        }
+        upsert: {
+          args: Prisma.NotificationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        aggregate: {
+          args: Prisma.NotificationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNotification>
+        }
+        groupBy: {
+          args: Prisma.NotificationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotificationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NotificationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotificationCountAggregateOutputType> | number
         }
       }
     }
@@ -798,6 +1023,17 @@ export const BlogPostScalarFieldEnum = {
 export type BlogPostScalarFieldEnum = (typeof BlogPostScalarFieldEnum)[keyof typeof BlogPostScalarFieldEnum]
 
 
+export const FeedPostScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  authorId: 'authorId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FeedPostScalarFieldEnum = (typeof FeedPostScalarFieldEnum)[keyof typeof FeedPostScalarFieldEnum]
+
+
 export const ConnectionScalarFieldEnum = {
   id: 'id',
   senderId: 'senderId',
@@ -807,6 +1043,29 @@ export const ConnectionScalarFieldEnum = {
 } as const
 
 export type ConnectionScalarFieldEnum = (typeof ConnectionScalarFieldEnum)[keyof typeof ConnectionScalarFieldEnum]
+
+
+export const EndorsementScalarFieldEnum = {
+  id: 'id',
+  fromUserId: 'fromUserId',
+  toUserId: 'toUserId',
+  skill: 'skill',
+  createdAt: 'createdAt'
+} as const
+
+export type EndorsementScalarFieldEnum = (typeof EndorsementScalarFieldEnum)[keyof typeof EndorsementScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  message: 'message',
+  isRead: 'isRead',
+  createdAt: 'createdAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -878,6 +1137,13 @@ export type EnumConnectionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
  * Reference to a field of type 'ConnectionStatus[]'
  */
 export type ListEnumConnectionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ConnectionStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -1048,7 +1314,10 @@ export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   project?: Prisma.ProjectOmit
   blogPost?: Prisma.BlogPostOmit
+  feedPost?: Prisma.FeedPostOmit
   connection?: Prisma.ConnectionOmit
+  endorsement?: Prisma.EndorsementOmit
+  notification?: Prisma.NotificationOmit
 }
 
 /* Types for Logging */

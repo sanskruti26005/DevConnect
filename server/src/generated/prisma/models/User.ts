@@ -220,8 +220,12 @@ export type UserWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   projects?: Prisma.ProjectListRelationFilter
   posts?: Prisma.BlogPostListRelationFilter
+  feedPosts?: Prisma.FeedPostListRelationFilter
   sentConnections?: Prisma.ConnectionListRelationFilter
   receivedConnections?: Prisma.ConnectionListRelationFilter
+  endorsementsGiven?: Prisma.EndorsementListRelationFilter
+  endorsementsReceived?: Prisma.EndorsementListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -237,8 +241,12 @@ export type UserOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   projects?: Prisma.ProjectOrderByRelationAggregateInput
   posts?: Prisma.BlogPostOrderByRelationAggregateInput
+  feedPosts?: Prisma.FeedPostOrderByRelationAggregateInput
   sentConnections?: Prisma.ConnectionOrderByRelationAggregateInput
   receivedConnections?: Prisma.ConnectionOrderByRelationAggregateInput
+  endorsementsGiven?: Prisma.EndorsementOrderByRelationAggregateInput
+  endorsementsReceived?: Prisma.EndorsementOrderByRelationAggregateInput
+  notifications?: Prisma.NotificationOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -257,8 +265,12 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   projects?: Prisma.ProjectListRelationFilter
   posts?: Prisma.BlogPostListRelationFilter
+  feedPosts?: Prisma.FeedPostListRelationFilter
   sentConnections?: Prisma.ConnectionListRelationFilter
   receivedConnections?: Prisma.ConnectionListRelationFilter
+  endorsementsGiven?: Prisma.EndorsementListRelationFilter
+  endorsementsReceived?: Prisma.EndorsementListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -306,8 +318,12 @@ export type UserCreateInput = {
   updatedAt?: Date | string
   projects?: Prisma.ProjectCreateNestedManyWithoutOwnerInput
   posts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  feedPosts?: Prisma.FeedPostCreateNestedManyWithoutAuthorInput
   sentConnections?: Prisma.ConnectionCreateNestedManyWithoutSenderInput
   receivedConnections?: Prisma.ConnectionCreateNestedManyWithoutReceiverInput
+  endorsementsGiven?: Prisma.EndorsementCreateNestedManyWithoutFromUserInput
+  endorsementsReceived?: Prisma.EndorsementCreateNestedManyWithoutToUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -323,8 +339,12 @@ export type UserUncheckedCreateInput = {
   updatedAt?: Date | string
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutOwnerInput
   posts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  feedPosts?: Prisma.FeedPostUncheckedCreateNestedManyWithoutAuthorInput
   sentConnections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutSenderInput
   receivedConnections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutReceiverInput
+  endorsementsGiven?: Prisma.EndorsementUncheckedCreateNestedManyWithoutFromUserInput
+  endorsementsReceived?: Prisma.EndorsementUncheckedCreateNestedManyWithoutToUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -340,8 +360,12 @@ export type UserUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projects?: Prisma.ProjectUpdateManyWithoutOwnerNestedInput
   posts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  feedPosts?: Prisma.FeedPostUpdateManyWithoutAuthorNestedInput
   sentConnections?: Prisma.ConnectionUpdateManyWithoutSenderNestedInput
   receivedConnections?: Prisma.ConnectionUpdateManyWithoutReceiverNestedInput
+  endorsementsGiven?: Prisma.EndorsementUpdateManyWithoutFromUserNestedInput
+  endorsementsReceived?: Prisma.EndorsementUpdateManyWithoutToUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -357,8 +381,12 @@ export type UserUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutOwnerNestedInput
   posts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  feedPosts?: Prisma.FeedPostUncheckedUpdateManyWithoutAuthorNestedInput
   sentConnections?: Prisma.ConnectionUncheckedUpdateManyWithoutSenderNestedInput
   receivedConnections?: Prisma.ConnectionUncheckedUpdateManyWithoutReceiverNestedInput
+  endorsementsGiven?: Prisma.EndorsementUncheckedUpdateManyWithoutFromUserNestedInput
+  endorsementsReceived?: Prisma.EndorsementUncheckedUpdateManyWithoutToUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -499,6 +527,20 @@ export type UserUpdateOneRequiredWithoutPostsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPostsInput, Prisma.UserUpdateWithoutPostsInput>, Prisma.UserUncheckedUpdateWithoutPostsInput>
 }
 
+export type UserCreateNestedOneWithoutFeedPostsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFeedPostsInput, Prisma.UserUncheckedCreateWithoutFeedPostsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFeedPostsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutFeedPostsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFeedPostsInput, Prisma.UserUncheckedCreateWithoutFeedPostsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFeedPostsInput
+  upsert?: Prisma.UserUpsertWithoutFeedPostsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFeedPostsInput, Prisma.UserUpdateWithoutFeedPostsInput>, Prisma.UserUncheckedUpdateWithoutFeedPostsInput>
+}
+
 export type UserCreateNestedOneWithoutSentConnectionsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutSentConnectionsInput, Prisma.UserUncheckedCreateWithoutSentConnectionsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutSentConnectionsInput
@@ -527,6 +569,48 @@ export type UserUpdateOneRequiredWithoutReceivedConnectionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReceivedConnectionsInput, Prisma.UserUpdateWithoutReceivedConnectionsInput>, Prisma.UserUncheckedUpdateWithoutReceivedConnectionsInput>
 }
 
+export type UserCreateNestedOneWithoutEndorsementsGivenInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEndorsementsGivenInput, Prisma.UserUncheckedCreateWithoutEndorsementsGivenInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEndorsementsGivenInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutEndorsementsReceivedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEndorsementsReceivedInput, Prisma.UserUncheckedCreateWithoutEndorsementsReceivedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEndorsementsReceivedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutEndorsementsGivenNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEndorsementsGivenInput, Prisma.UserUncheckedCreateWithoutEndorsementsGivenInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEndorsementsGivenInput
+  upsert?: Prisma.UserUpsertWithoutEndorsementsGivenInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEndorsementsGivenInput, Prisma.UserUpdateWithoutEndorsementsGivenInput>, Prisma.UserUncheckedUpdateWithoutEndorsementsGivenInput>
+}
+
+export type UserUpdateOneRequiredWithoutEndorsementsReceivedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEndorsementsReceivedInput, Prisma.UserUncheckedCreateWithoutEndorsementsReceivedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEndorsementsReceivedInput
+  upsert?: Prisma.UserUpsertWithoutEndorsementsReceivedInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEndorsementsReceivedInput, Prisma.UserUpdateWithoutEndorsementsReceivedInput>, Prisma.UserUncheckedUpdateWithoutEndorsementsReceivedInput>
+}
+
+export type UserCreateNestedOneWithoutNotificationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  upsert?: Prisma.UserUpsertWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
 export type UserCreateWithoutProjectsInput = {
   id?: string
   name: string
@@ -539,8 +623,12 @@ export type UserCreateWithoutProjectsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  feedPosts?: Prisma.FeedPostCreateNestedManyWithoutAuthorInput
   sentConnections?: Prisma.ConnectionCreateNestedManyWithoutSenderInput
   receivedConnections?: Prisma.ConnectionCreateNestedManyWithoutReceiverInput
+  endorsementsGiven?: Prisma.EndorsementCreateNestedManyWithoutFromUserInput
+  endorsementsReceived?: Prisma.EndorsementCreateNestedManyWithoutToUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProjectsInput = {
@@ -555,8 +643,12 @@ export type UserUncheckedCreateWithoutProjectsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   posts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  feedPosts?: Prisma.FeedPostUncheckedCreateNestedManyWithoutAuthorInput
   sentConnections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutSenderInput
   receivedConnections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutReceiverInput
+  endorsementsGiven?: Prisma.EndorsementUncheckedCreateNestedManyWithoutFromUserInput
+  endorsementsReceived?: Prisma.EndorsementUncheckedCreateNestedManyWithoutToUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProjectsInput = {
@@ -587,8 +679,12 @@ export type UserUpdateWithoutProjectsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  feedPosts?: Prisma.FeedPostUpdateManyWithoutAuthorNestedInput
   sentConnections?: Prisma.ConnectionUpdateManyWithoutSenderNestedInput
   receivedConnections?: Prisma.ConnectionUpdateManyWithoutReceiverNestedInput
+  endorsementsGiven?: Prisma.EndorsementUpdateManyWithoutFromUserNestedInput
+  endorsementsReceived?: Prisma.EndorsementUpdateManyWithoutToUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProjectsInput = {
@@ -603,8 +699,12 @@ export type UserUncheckedUpdateWithoutProjectsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   posts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  feedPosts?: Prisma.FeedPostUncheckedUpdateManyWithoutAuthorNestedInput
   sentConnections?: Prisma.ConnectionUncheckedUpdateManyWithoutSenderNestedInput
   receivedConnections?: Prisma.ConnectionUncheckedUpdateManyWithoutReceiverNestedInput
+  endorsementsGiven?: Prisma.EndorsementUncheckedUpdateManyWithoutFromUserNestedInput
+  endorsementsReceived?: Prisma.EndorsementUncheckedUpdateManyWithoutToUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPostsInput = {
@@ -619,8 +719,12 @@ export type UserCreateWithoutPostsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   projects?: Prisma.ProjectCreateNestedManyWithoutOwnerInput
+  feedPosts?: Prisma.FeedPostCreateNestedManyWithoutAuthorInput
   sentConnections?: Prisma.ConnectionCreateNestedManyWithoutSenderInput
   receivedConnections?: Prisma.ConnectionCreateNestedManyWithoutReceiverInput
+  endorsementsGiven?: Prisma.EndorsementCreateNestedManyWithoutFromUserInput
+  endorsementsReceived?: Prisma.EndorsementCreateNestedManyWithoutToUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPostsInput = {
@@ -635,8 +739,12 @@ export type UserUncheckedCreateWithoutPostsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutOwnerInput
+  feedPosts?: Prisma.FeedPostUncheckedCreateNestedManyWithoutAuthorInput
   sentConnections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutSenderInput
   receivedConnections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutReceiverInput
+  endorsementsGiven?: Prisma.EndorsementUncheckedCreateNestedManyWithoutFromUserInput
+  endorsementsReceived?: Prisma.EndorsementUncheckedCreateNestedManyWithoutToUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPostsInput = {
@@ -667,8 +775,12 @@ export type UserUpdateWithoutPostsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projects?: Prisma.ProjectUpdateManyWithoutOwnerNestedInput
+  feedPosts?: Prisma.FeedPostUpdateManyWithoutAuthorNestedInput
   sentConnections?: Prisma.ConnectionUpdateManyWithoutSenderNestedInput
   receivedConnections?: Prisma.ConnectionUpdateManyWithoutReceiverNestedInput
+  endorsementsGiven?: Prisma.EndorsementUpdateManyWithoutFromUserNestedInput
+  endorsementsReceived?: Prisma.EndorsementUpdateManyWithoutToUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPostsInput = {
@@ -683,8 +795,108 @@ export type UserUncheckedUpdateWithoutPostsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutOwnerNestedInput
+  feedPosts?: Prisma.FeedPostUncheckedUpdateManyWithoutAuthorNestedInput
   sentConnections?: Prisma.ConnectionUncheckedUpdateManyWithoutSenderNestedInput
   receivedConnections?: Prisma.ConnectionUncheckedUpdateManyWithoutReceiverNestedInput
+  endorsementsGiven?: Prisma.EndorsementUncheckedUpdateManyWithoutFromUserNestedInput
+  endorsementsReceived?: Prisma.EndorsementUncheckedUpdateManyWithoutToUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutFeedPostsInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  bio?: string | null
+  location?: string | null
+  profileImage?: string | null
+  skills?: Prisma.UserCreateskillsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  projects?: Prisma.ProjectCreateNestedManyWithoutOwnerInput
+  posts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  sentConnections?: Prisma.ConnectionCreateNestedManyWithoutSenderInput
+  receivedConnections?: Prisma.ConnectionCreateNestedManyWithoutReceiverInput
+  endorsementsGiven?: Prisma.EndorsementCreateNestedManyWithoutFromUserInput
+  endorsementsReceived?: Prisma.EndorsementCreateNestedManyWithoutToUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutFeedPostsInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  bio?: string | null
+  location?: string | null
+  profileImage?: string | null
+  skills?: Prisma.UserCreateskillsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutOwnerInput
+  posts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  sentConnections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutSenderInput
+  receivedConnections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutReceiverInput
+  endorsementsGiven?: Prisma.EndorsementUncheckedCreateNestedManyWithoutFromUserInput
+  endorsementsReceived?: Prisma.EndorsementUncheckedCreateNestedManyWithoutToUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutFeedPostsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFeedPostsInput, Prisma.UserUncheckedCreateWithoutFeedPostsInput>
+}
+
+export type UserUpsertWithoutFeedPostsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFeedPostsInput, Prisma.UserUncheckedUpdateWithoutFeedPostsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFeedPostsInput, Prisma.UserUncheckedCreateWithoutFeedPostsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFeedPostsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFeedPostsInput, Prisma.UserUncheckedUpdateWithoutFeedPostsInput>
+}
+
+export type UserUpdateWithoutFeedPostsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skills?: Prisma.UserUpdateskillsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projects?: Prisma.ProjectUpdateManyWithoutOwnerNestedInput
+  posts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  sentConnections?: Prisma.ConnectionUpdateManyWithoutSenderNestedInput
+  receivedConnections?: Prisma.ConnectionUpdateManyWithoutReceiverNestedInput
+  endorsementsGiven?: Prisma.EndorsementUpdateManyWithoutFromUserNestedInput
+  endorsementsReceived?: Prisma.EndorsementUpdateManyWithoutToUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFeedPostsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skills?: Prisma.UserUpdateskillsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutOwnerNestedInput
+  posts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  sentConnections?: Prisma.ConnectionUncheckedUpdateManyWithoutSenderNestedInput
+  receivedConnections?: Prisma.ConnectionUncheckedUpdateManyWithoutReceiverNestedInput
+  endorsementsGiven?: Prisma.EndorsementUncheckedUpdateManyWithoutFromUserNestedInput
+  endorsementsReceived?: Prisma.EndorsementUncheckedUpdateManyWithoutToUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSentConnectionsInput = {
@@ -700,7 +912,11 @@ export type UserCreateWithoutSentConnectionsInput = {
   updatedAt?: Date | string
   projects?: Prisma.ProjectCreateNestedManyWithoutOwnerInput
   posts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  feedPosts?: Prisma.FeedPostCreateNestedManyWithoutAuthorInput
   receivedConnections?: Prisma.ConnectionCreateNestedManyWithoutReceiverInput
+  endorsementsGiven?: Prisma.EndorsementCreateNestedManyWithoutFromUserInput
+  endorsementsReceived?: Prisma.EndorsementCreateNestedManyWithoutToUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSentConnectionsInput = {
@@ -716,7 +932,11 @@ export type UserUncheckedCreateWithoutSentConnectionsInput = {
   updatedAt?: Date | string
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutOwnerInput
   posts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  feedPosts?: Prisma.FeedPostUncheckedCreateNestedManyWithoutAuthorInput
   receivedConnections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutReceiverInput
+  endorsementsGiven?: Prisma.EndorsementUncheckedCreateNestedManyWithoutFromUserInput
+  endorsementsReceived?: Prisma.EndorsementUncheckedCreateNestedManyWithoutToUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSentConnectionsInput = {
@@ -737,7 +957,11 @@ export type UserCreateWithoutReceivedConnectionsInput = {
   updatedAt?: Date | string
   projects?: Prisma.ProjectCreateNestedManyWithoutOwnerInput
   posts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  feedPosts?: Prisma.FeedPostCreateNestedManyWithoutAuthorInput
   sentConnections?: Prisma.ConnectionCreateNestedManyWithoutSenderInput
+  endorsementsGiven?: Prisma.EndorsementCreateNestedManyWithoutFromUserInput
+  endorsementsReceived?: Prisma.EndorsementCreateNestedManyWithoutToUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReceivedConnectionsInput = {
@@ -753,7 +977,11 @@ export type UserUncheckedCreateWithoutReceivedConnectionsInput = {
   updatedAt?: Date | string
   projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutOwnerInput
   posts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  feedPosts?: Prisma.FeedPostUncheckedCreateNestedManyWithoutAuthorInput
   sentConnections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutSenderInput
+  endorsementsGiven?: Prisma.EndorsementUncheckedCreateNestedManyWithoutFromUserInput
+  endorsementsReceived?: Prisma.EndorsementUncheckedCreateNestedManyWithoutToUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReceivedConnectionsInput = {
@@ -785,7 +1013,11 @@ export type UserUpdateWithoutSentConnectionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projects?: Prisma.ProjectUpdateManyWithoutOwnerNestedInput
   posts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  feedPosts?: Prisma.FeedPostUpdateManyWithoutAuthorNestedInput
   receivedConnections?: Prisma.ConnectionUpdateManyWithoutReceiverNestedInput
+  endorsementsGiven?: Prisma.EndorsementUpdateManyWithoutFromUserNestedInput
+  endorsementsReceived?: Prisma.EndorsementUpdateManyWithoutToUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSentConnectionsInput = {
@@ -801,7 +1033,11 @@ export type UserUncheckedUpdateWithoutSentConnectionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutOwnerNestedInput
   posts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  feedPosts?: Prisma.FeedPostUncheckedUpdateManyWithoutAuthorNestedInput
   receivedConnections?: Prisma.ConnectionUncheckedUpdateManyWithoutReceiverNestedInput
+  endorsementsGiven?: Prisma.EndorsementUncheckedUpdateManyWithoutFromUserNestedInput
+  endorsementsReceived?: Prisma.EndorsementUncheckedUpdateManyWithoutToUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutReceivedConnectionsInput = {
@@ -828,7 +1064,11 @@ export type UserUpdateWithoutReceivedConnectionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projects?: Prisma.ProjectUpdateManyWithoutOwnerNestedInput
   posts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  feedPosts?: Prisma.FeedPostUpdateManyWithoutAuthorNestedInput
   sentConnections?: Prisma.ConnectionUpdateManyWithoutSenderNestedInput
+  endorsementsGiven?: Prisma.EndorsementUpdateManyWithoutFromUserNestedInput
+  endorsementsReceived?: Prisma.EndorsementUpdateManyWithoutToUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReceivedConnectionsInput = {
@@ -844,7 +1084,299 @@ export type UserUncheckedUpdateWithoutReceivedConnectionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   projects?: Prisma.ProjectUncheckedUpdateManyWithoutOwnerNestedInput
   posts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  feedPosts?: Prisma.FeedPostUncheckedUpdateManyWithoutAuthorNestedInput
   sentConnections?: Prisma.ConnectionUncheckedUpdateManyWithoutSenderNestedInput
+  endorsementsGiven?: Prisma.EndorsementUncheckedUpdateManyWithoutFromUserNestedInput
+  endorsementsReceived?: Prisma.EndorsementUncheckedUpdateManyWithoutToUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutEndorsementsGivenInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  bio?: string | null
+  location?: string | null
+  profileImage?: string | null
+  skills?: Prisma.UserCreateskillsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  projects?: Prisma.ProjectCreateNestedManyWithoutOwnerInput
+  posts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  feedPosts?: Prisma.FeedPostCreateNestedManyWithoutAuthorInput
+  sentConnections?: Prisma.ConnectionCreateNestedManyWithoutSenderInput
+  receivedConnections?: Prisma.ConnectionCreateNestedManyWithoutReceiverInput
+  endorsementsReceived?: Prisma.EndorsementCreateNestedManyWithoutToUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutEndorsementsGivenInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  bio?: string | null
+  location?: string | null
+  profileImage?: string | null
+  skills?: Prisma.UserCreateskillsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutOwnerInput
+  posts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  feedPosts?: Prisma.FeedPostUncheckedCreateNestedManyWithoutAuthorInput
+  sentConnections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutSenderInput
+  receivedConnections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutReceiverInput
+  endorsementsReceived?: Prisma.EndorsementUncheckedCreateNestedManyWithoutToUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutEndorsementsGivenInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutEndorsementsGivenInput, Prisma.UserUncheckedCreateWithoutEndorsementsGivenInput>
+}
+
+export type UserCreateWithoutEndorsementsReceivedInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  bio?: string | null
+  location?: string | null
+  profileImage?: string | null
+  skills?: Prisma.UserCreateskillsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  projects?: Prisma.ProjectCreateNestedManyWithoutOwnerInput
+  posts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  feedPosts?: Prisma.FeedPostCreateNestedManyWithoutAuthorInput
+  sentConnections?: Prisma.ConnectionCreateNestedManyWithoutSenderInput
+  receivedConnections?: Prisma.ConnectionCreateNestedManyWithoutReceiverInput
+  endorsementsGiven?: Prisma.EndorsementCreateNestedManyWithoutFromUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutEndorsementsReceivedInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  bio?: string | null
+  location?: string | null
+  profileImage?: string | null
+  skills?: Prisma.UserCreateskillsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutOwnerInput
+  posts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  feedPosts?: Prisma.FeedPostUncheckedCreateNestedManyWithoutAuthorInput
+  sentConnections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutSenderInput
+  receivedConnections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutReceiverInput
+  endorsementsGiven?: Prisma.EndorsementUncheckedCreateNestedManyWithoutFromUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutEndorsementsReceivedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutEndorsementsReceivedInput, Prisma.UserUncheckedCreateWithoutEndorsementsReceivedInput>
+}
+
+export type UserUpsertWithoutEndorsementsGivenInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutEndorsementsGivenInput, Prisma.UserUncheckedUpdateWithoutEndorsementsGivenInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutEndorsementsGivenInput, Prisma.UserUncheckedCreateWithoutEndorsementsGivenInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutEndorsementsGivenInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutEndorsementsGivenInput, Prisma.UserUncheckedUpdateWithoutEndorsementsGivenInput>
+}
+
+export type UserUpdateWithoutEndorsementsGivenInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skills?: Prisma.UserUpdateskillsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projects?: Prisma.ProjectUpdateManyWithoutOwnerNestedInput
+  posts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  feedPosts?: Prisma.FeedPostUpdateManyWithoutAuthorNestedInput
+  sentConnections?: Prisma.ConnectionUpdateManyWithoutSenderNestedInput
+  receivedConnections?: Prisma.ConnectionUpdateManyWithoutReceiverNestedInput
+  endorsementsReceived?: Prisma.EndorsementUpdateManyWithoutToUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutEndorsementsGivenInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skills?: Prisma.UserUpdateskillsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutOwnerNestedInput
+  posts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  feedPosts?: Prisma.FeedPostUncheckedUpdateManyWithoutAuthorNestedInput
+  sentConnections?: Prisma.ConnectionUncheckedUpdateManyWithoutSenderNestedInput
+  receivedConnections?: Prisma.ConnectionUncheckedUpdateManyWithoutReceiverNestedInput
+  endorsementsReceived?: Prisma.EndorsementUncheckedUpdateManyWithoutToUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUpsertWithoutEndorsementsReceivedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutEndorsementsReceivedInput, Prisma.UserUncheckedUpdateWithoutEndorsementsReceivedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutEndorsementsReceivedInput, Prisma.UserUncheckedCreateWithoutEndorsementsReceivedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutEndorsementsReceivedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutEndorsementsReceivedInput, Prisma.UserUncheckedUpdateWithoutEndorsementsReceivedInput>
+}
+
+export type UserUpdateWithoutEndorsementsReceivedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skills?: Prisma.UserUpdateskillsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projects?: Prisma.ProjectUpdateManyWithoutOwnerNestedInput
+  posts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  feedPosts?: Prisma.FeedPostUpdateManyWithoutAuthorNestedInput
+  sentConnections?: Prisma.ConnectionUpdateManyWithoutSenderNestedInput
+  receivedConnections?: Prisma.ConnectionUpdateManyWithoutReceiverNestedInput
+  endorsementsGiven?: Prisma.EndorsementUpdateManyWithoutFromUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutEndorsementsReceivedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skills?: Prisma.UserUpdateskillsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutOwnerNestedInput
+  posts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  feedPosts?: Prisma.FeedPostUncheckedUpdateManyWithoutAuthorNestedInput
+  sentConnections?: Prisma.ConnectionUncheckedUpdateManyWithoutSenderNestedInput
+  receivedConnections?: Prisma.ConnectionUncheckedUpdateManyWithoutReceiverNestedInput
+  endorsementsGiven?: Prisma.EndorsementUncheckedUpdateManyWithoutFromUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutNotificationsInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  bio?: string | null
+  location?: string | null
+  profileImage?: string | null
+  skills?: Prisma.UserCreateskillsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  projects?: Prisma.ProjectCreateNestedManyWithoutOwnerInput
+  posts?: Prisma.BlogPostCreateNestedManyWithoutAuthorInput
+  feedPosts?: Prisma.FeedPostCreateNestedManyWithoutAuthorInput
+  sentConnections?: Prisma.ConnectionCreateNestedManyWithoutSenderInput
+  receivedConnections?: Prisma.ConnectionCreateNestedManyWithoutReceiverInput
+  endorsementsGiven?: Prisma.EndorsementCreateNestedManyWithoutFromUserInput
+  endorsementsReceived?: Prisma.EndorsementCreateNestedManyWithoutToUserInput
+}
+
+export type UserUncheckedCreateWithoutNotificationsInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  bio?: string | null
+  location?: string | null
+  profileImage?: string | null
+  skills?: Prisma.UserCreateskillsInput | string[]
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutOwnerInput
+  posts?: Prisma.BlogPostUncheckedCreateNestedManyWithoutAuthorInput
+  feedPosts?: Prisma.FeedPostUncheckedCreateNestedManyWithoutAuthorInput
+  sentConnections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutSenderInput
+  receivedConnections?: Prisma.ConnectionUncheckedCreateNestedManyWithoutReceiverInput
+  endorsementsGiven?: Prisma.EndorsementUncheckedCreateNestedManyWithoutFromUserInput
+  endorsementsReceived?: Prisma.EndorsementUncheckedCreateNestedManyWithoutToUserInput
+}
+
+export type UserCreateOrConnectWithoutNotificationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+}
+
+export type UserUpsertWithoutNotificationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type UserUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skills?: Prisma.UserUpdateskillsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projects?: Prisma.ProjectUpdateManyWithoutOwnerNestedInput
+  posts?: Prisma.BlogPostUpdateManyWithoutAuthorNestedInput
+  feedPosts?: Prisma.FeedPostUpdateManyWithoutAuthorNestedInput
+  sentConnections?: Prisma.ConnectionUpdateManyWithoutSenderNestedInput
+  receivedConnections?: Prisma.ConnectionUpdateManyWithoutReceiverNestedInput
+  endorsementsGiven?: Prisma.EndorsementUpdateManyWithoutFromUserNestedInput
+  endorsementsReceived?: Prisma.EndorsementUpdateManyWithoutToUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  skills?: Prisma.UserUpdateskillsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutOwnerNestedInput
+  posts?: Prisma.BlogPostUncheckedUpdateManyWithoutAuthorNestedInput
+  feedPosts?: Prisma.FeedPostUncheckedUpdateManyWithoutAuthorNestedInput
+  sentConnections?: Prisma.ConnectionUncheckedUpdateManyWithoutSenderNestedInput
+  receivedConnections?: Prisma.ConnectionUncheckedUpdateManyWithoutReceiverNestedInput
+  endorsementsGiven?: Prisma.EndorsementUncheckedUpdateManyWithoutFromUserNestedInput
+  endorsementsReceived?: Prisma.EndorsementUncheckedUpdateManyWithoutToUserNestedInput
 }
 
 
@@ -855,15 +1387,23 @@ export type UserUncheckedUpdateWithoutReceivedConnectionsInput = {
 export type UserCountOutputType = {
   projects: number
   posts: number
+  feedPosts: number
   sentConnections: number
   receivedConnections: number
+  endorsementsGiven: number
+  endorsementsReceived: number
+  notifications: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   projects?: boolean | UserCountOutputTypeCountProjectsArgs
   posts?: boolean | UserCountOutputTypeCountPostsArgs
+  feedPosts?: boolean | UserCountOutputTypeCountFeedPostsArgs
   sentConnections?: boolean | UserCountOutputTypeCountSentConnectionsArgs
   receivedConnections?: boolean | UserCountOutputTypeCountReceivedConnectionsArgs
+  endorsementsGiven?: boolean | UserCountOutputTypeCountEndorsementsGivenArgs
+  endorsementsReceived?: boolean | UserCountOutputTypeCountEndorsementsReceivedArgs
+  notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
 }
 
 /**
@@ -893,6 +1433,13 @@ export type UserCountOutputTypeCountPostsArgs<ExtArgs extends runtime.Types.Exte
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountFeedPostsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FeedPostWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountSentConnectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ConnectionWhereInput
 }
@@ -902,6 +1449,27 @@ export type UserCountOutputTypeCountSentConnectionsArgs<ExtArgs extends runtime.
  */
 export type UserCountOutputTypeCountReceivedConnectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ConnectionWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountEndorsementsGivenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.EndorsementWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountEndorsementsReceivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.EndorsementWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
 }
 
 
@@ -918,8 +1486,12 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   projects?: boolean | Prisma.User$projectsArgs<ExtArgs>
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
+  feedPosts?: boolean | Prisma.User$feedPostsArgs<ExtArgs>
   sentConnections?: boolean | Prisma.User$sentConnectionsArgs<ExtArgs>
   receivedConnections?: boolean | Prisma.User$receivedConnectionsArgs<ExtArgs>
+  endorsementsGiven?: boolean | Prisma.User$endorsementsGivenArgs<ExtArgs>
+  endorsementsReceived?: boolean | Prisma.User$endorsementsReceivedArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -966,8 +1538,12 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   projects?: boolean | Prisma.User$projectsArgs<ExtArgs>
   posts?: boolean | Prisma.User$postsArgs<ExtArgs>
+  feedPosts?: boolean | Prisma.User$feedPostsArgs<ExtArgs>
   sentConnections?: boolean | Prisma.User$sentConnectionsArgs<ExtArgs>
   receivedConnections?: boolean | Prisma.User$receivedConnectionsArgs<ExtArgs>
+  endorsementsGiven?: boolean | Prisma.User$endorsementsGivenArgs<ExtArgs>
+  endorsementsReceived?: boolean | Prisma.User$endorsementsReceivedArgs<ExtArgs>
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -978,8 +1554,12 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     projects: Prisma.$ProjectPayload<ExtArgs>[]
     posts: Prisma.$BlogPostPayload<ExtArgs>[]
+    feedPosts: Prisma.$FeedPostPayload<ExtArgs>[]
     sentConnections: Prisma.$ConnectionPayload<ExtArgs>[]
     receivedConnections: Prisma.$ConnectionPayload<ExtArgs>[]
+    endorsementsGiven: Prisma.$EndorsementPayload<ExtArgs>[]
+    endorsementsReceived: Prisma.$EndorsementPayload<ExtArgs>[]
+    notifications: Prisma.$NotificationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1388,8 +1968,12 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   projects<T extends Prisma.User$projectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$projectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   posts<T extends Prisma.User$postsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$postsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BlogPostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  feedPosts<T extends Prisma.User$feedPostsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$feedPostsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FeedPostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sentConnections<T extends Prisma.User$sentConnectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sentConnectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   receivedConnections<T extends Prisma.User$receivedConnectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$receivedConnectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  endorsementsGiven<T extends Prisma.User$endorsementsGivenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$endorsementsGivenArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EndorsementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  endorsementsReceived<T extends Prisma.User$endorsementsReceivedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$endorsementsReceivedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EndorsementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1870,6 +2454,30 @@ export type User$postsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
 }
 
 /**
+ * User.feedPosts
+ */
+export type User$feedPostsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FeedPost
+   */
+  select?: Prisma.FeedPostSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FeedPost
+   */
+  omit?: Prisma.FeedPostOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FeedPostInclude<ExtArgs> | null
+  where?: Prisma.FeedPostWhereInput
+  orderBy?: Prisma.FeedPostOrderByWithRelationInput | Prisma.FeedPostOrderByWithRelationInput[]
+  cursor?: Prisma.FeedPostWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FeedPostScalarFieldEnum | Prisma.FeedPostScalarFieldEnum[]
+}
+
+/**
  * User.sentConnections
  */
 export type User$sentConnectionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1915,6 +2523,78 @@ export type User$receivedConnectionsArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.ConnectionScalarFieldEnum | Prisma.ConnectionScalarFieldEnum[]
+}
+
+/**
+ * User.endorsementsGiven
+ */
+export type User$endorsementsGivenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Endorsement
+   */
+  select?: Prisma.EndorsementSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Endorsement
+   */
+  omit?: Prisma.EndorsementOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EndorsementInclude<ExtArgs> | null
+  where?: Prisma.EndorsementWhereInput
+  orderBy?: Prisma.EndorsementOrderByWithRelationInput | Prisma.EndorsementOrderByWithRelationInput[]
+  cursor?: Prisma.EndorsementWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.EndorsementScalarFieldEnum | Prisma.EndorsementScalarFieldEnum[]
+}
+
+/**
+ * User.endorsementsReceived
+ */
+export type User$endorsementsReceivedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Endorsement
+   */
+  select?: Prisma.EndorsementSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Endorsement
+   */
+  omit?: Prisma.EndorsementOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EndorsementInclude<ExtArgs> | null
+  where?: Prisma.EndorsementWhereInput
+  orderBy?: Prisma.EndorsementOrderByWithRelationInput | Prisma.EndorsementOrderByWithRelationInput[]
+  cursor?: Prisma.EndorsementWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.EndorsementScalarFieldEnum | Prisma.EndorsementScalarFieldEnum[]
+}
+
+/**
+ * User.notifications
+ */
+export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
 }
 
 /**
