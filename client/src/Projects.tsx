@@ -179,7 +179,7 @@ function Projects({ activeSection, setActiveSection }: ProjectsProps) {
         {activeSection === 'add-project' && (
           <div className="accordion-content">
 
-            <form onSubmit={handleSubmit}>
+            <form className="project-form" onSubmit={handleSubmit}>
               <input
                 type="text"
                 placeholder="Project Title"

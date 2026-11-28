@@ -2734,3 +2734,90 @@ button {
 }
 
 
+/* =========================================
+   DEVCONNECT - PROFESSIONAL PROJECT FORM
+========================================= */
+
+.project-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.project-form input,
+.project-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 14px;
+  border: 1px solid var(--dc-border);
+  border-radius: 9px;
+  outline: none;
+  background: #ffffff;
+  color: var(--dc-text);
+  font-size: 12px;
+  transition: 0.2s ease;
+}
+
+.project-form input {
+  min-height: 44px;
+}
+
+.project-form textarea {
+  min-height: 125px;
+  resize: vertical;
+  line-height: 1.7;
+}
+
+.project-form input:focus,
+.project-form textarea:focus {
+  border-color: #8d84ed;
+  box-shadow: 0 0 0 3px rgba(81, 69, 205, 0.08);
+}
+
+.project-form textarea,
+.project-form input:nth-of-type(3),
+.project-form .primary-button {
+  grid-column: 1 / -1;
+}
+
+.project-form .primary-button {
+  justify-self: start;
+  min-width: 145px;
+  padding: 12px 20px;
+  font-size: 12px;
+}
+
+.project-form .primary-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.project-item {
+  transition: 0.2s ease;
+}
+
+.project-item:hover {
+  border-color: #cbc7ff;
+  box-shadow: var(--dc-shadow);
+}
+
+.project-item button:hover {
+  background: #ffeded;
+}
+
+@media (max-width: 600px) {
+  .project-form {
+    grid-template-columns: 1fr;
+  }
+
+  .project-form textarea,
+  .project-form input:nth-of-type(3),
+  .project-form .primary-button {
+    grid-column: 1;
+  }
+
+  .project-form .primary-button {
+    width: 100%;
+  }
+}
+
