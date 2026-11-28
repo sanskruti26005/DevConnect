@@ -7,12 +7,13 @@ import { authenticateUser } from '../middleware/auth.middleware.js';
 
 const router = Router();
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 // User Registration
 router.post('/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // Check required fields
     if (!name || !email || !password) {
       return res.status(400).json({
         success: false,
@@ -20,7 +21,6 @@ router.post('/register', async (req, res) => {
       });
     }
 
-    // Validate password length
     if (password.length < 8) {
       return res.status(400).json({
         success: false,
@@ -28,11 +28,9 @@ router.post('/register', async (req, res) => {
       });
     }
 
-    // Normalize user details
     const normalizedName = name.trim();
     const normalizedEmail = email.trim().toLowerCase();
 
-    // Check whether email already exists
     const existingUser = await prisma.user.findUnique({
       where: { email: normalizedEmail }
     });
@@ -44,10 +42,8 @@ router.post('/register', async (req, res) => {
       });
     }
 
-    // Hash password
     const passwordHash = await bcrypt.hash(password, 12);
 
-    // Create user in database
     const user = await prisma.user.create({
       data: {
         name: normalizedName,
@@ -56,7 +52,6 @@ router.post('/register', async (req, res) => {
       }
     });
 
-    // Send safe user details
     return res.status(201).json({
       success: true,
       data: {
@@ -77,13 +72,11 @@ router.post('/register', async (req, res) => {
   }
 });
 
-
 // User Login
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Check required fields
     if (!email || !password) {
       return res.status(400).json({
         success: false,
@@ -91,10 +84,8 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    // Normalize email
     const normalizedEmail = email.trim().toLowerCase();
 
-    // Find user in database
     const user = await prisma.user.findUnique({
       where: { email: normalizedEmail }
     });
@@ -106,7 +97,6 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    // Compare entered password with stored hash
     const isPasswordValid = await bcrypt.compare(
       password,
       user.passwordHash
@@ -119,7 +109,6 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    // Generate JWT token
     const jwtSecret = process.env.JWT_SECRET;
 
     if (!jwtSecret) {
@@ -135,12 +124,11 @@ router.post('/login', async (req, res) => {
     // Store token in an HTTP-only cookie
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
-    // Send successful login response
     return res.status(200).json({
       success: true,
       data: {
@@ -161,6 +149,7 @@ router.post('/login', async (req, res) => {
     });
   }
 });
+
 // Get currently authenticated user
 router.get('/me', authenticateUser, async (_req, res) => {
   try {
@@ -201,12 +190,13 @@ router.get('/me', authenticateUser, async (_req, res) => {
     });
   }
 });
+
 // User Logout
 router.post('/logout', (_req, res) => {
   res.clearCookie('token', {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax'
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax'
   });
 
   return res.status(200).json({
@@ -214,4 +204,5 @@ router.post('/logout', (_req, res) => {
     message: 'Logged out successfully'
   });
 });
+
 export default router;
