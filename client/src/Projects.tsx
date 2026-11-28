@@ -1,7 +1,8 @@
 
 import { useEffect, useState } from 'react';
+import { API_BASE } from './api';
 
-const API_URL = 'http://localhost:5000/api/projects';
+const API_URL = `${API_BASE}/projects`;
 
 interface Project {
   id: string;

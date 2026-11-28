@@ -1,7 +1,8 @@
 
 import { useEffect, useState } from 'react';
+import { API_BASE } from './api';
 
-const API = 'http://localhost:5000/api/feed';
+const API = `${API_BASE}/feed`;
 
 interface FeedPost {
   id: string;
@@ -50,7 +51,7 @@ function Feed() {
     const initializeFeed = async () => {
       try {
         const response = await fetch(
-          'http://localhost:5000/api/auth/me',
+          `${API_BASE}/auth/me`,
           { credentials: 'include' }
         );
 

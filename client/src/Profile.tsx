@@ -4,8 +4,8 @@ import type { FormEvent } from 'react';
 import Projects from './Projects';
 import Community from './Community';
 import Feed from './Feed';
-
-const API = 'http://localhost:5000/api/profile';
+import { API_BASE } from './api';
+const API = `${API_BASE}/profile`;
 
 interface UserProfile {
   id: string;

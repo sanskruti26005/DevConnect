@@ -2,8 +2,9 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import Profile from './Profile';
+import { API_BASE } from './api';
 
-const API_URL = 'http://localhost:5000/api/auth';
+const API_URL = `${API_BASE}/auth`;
 
 interface User {
   id: string;

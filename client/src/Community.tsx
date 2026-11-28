@@ -1,8 +1,9 @@
 
 import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
+import { API_BASE } from './api';
 
-const API = 'http://localhost:5000/api';
+const API = API_BASE;
 
 interface ApiResponse<T> {
   success: boolean;
