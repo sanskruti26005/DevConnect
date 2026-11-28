@@ -170,8 +170,9 @@ function Community({
     void loadCommunity();
   }, []);
 
+  // FIX: Keep the selected section active instead of setting it to null.
   const toggle = (section: string) => {
-    setActiveSection(activeSection === section ? null : section);
+    setActiveSection(section);
   };
 
   const runAction = async (
